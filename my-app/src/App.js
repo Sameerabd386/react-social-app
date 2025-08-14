@@ -5,7 +5,8 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import './App.css';
 import Login from './components/Login.js';
 import SignUp from './components/SignUp.js';
-import CreatePost from './components/CreatePost.js'; // Import the new component
+import CreatePost from './components/CreatePost.js';
+import Feed from './components/Feed.js'; // Import the new Feed component
 
 function App() {
   const [user, setUser] = useState(null);
@@ -42,7 +43,9 @@ function App() {
           <p>Welcome, {user.email}!</p>
           <button onClick={handleLogout}>Logout</button>
           <hr />
-          <CreatePost /> {/* Add the new component here */}
+          <CreatePost />
+          <hr />
+          <Feed /> {/* <-- Add the Feed component here */}
         </div>
       ) : (
         // If user is logged out, show this:
@@ -56,4 +59,4 @@ function App() {
   );
 }
 
-export default App;
+export default App
