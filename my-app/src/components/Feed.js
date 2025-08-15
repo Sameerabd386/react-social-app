@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { db, auth } from '../firebase';
 import { collection, query, orderBy, onSnapshot, doc, deleteDoc } from "firebase/firestore";
-import LikeButton from './LikeButton'; // Import the new component
+import LikeButton from './LikeButton';
 
 function Feed() {
   const [posts, setPosts] = useState([]);
@@ -40,7 +40,8 @@ function Feed() {
           <div key={post.id} style={{ border: '1px solid #ccc', margin: '10px', padding: '10px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <p><strong>{post.authorEmail}</strong></p>
-              {auth.currentUser && auth.currentUser.email === post.authorEmail && (
+              {/* --- CHANGED THIS LINE --- */}
+              {auth.currentUser && auth.currentUser.uid === post.authorId && (
                 <button 
                   onClick={() => handleDeletePost(post.id)} 
                   style={{ color: 'red', background: 'none', border: 'none', cursor: 'pointer' }}
@@ -54,7 +55,7 @@ function Feed() {
               <small>
                 {post.createdAt ? new Date(post.createdAt.toDate()).toLocaleString() : 'Just now'}
               </small>
-              <LikeButton postId={post.id} /> {/* <-- Add the LikeButton here */}
+              <LikeButton postId={post.id} />
             </div>
           </div>
         ))}

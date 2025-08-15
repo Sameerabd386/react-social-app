@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { db, auth } from '../firebase'; // Import db and auth
+import { db, auth } from '../firebase';
 import { collection, addDoc, serverTimestamp } from "firebase/firestore"; 
 
 function CreatePost() {
@@ -12,13 +12,13 @@ function CreatePost() {
     }
 
     try {
-      // 'posts' is the name of our collection in Firestore
       await addDoc(collection(db, "posts"), {
         text: postText,
-        authorEmail: auth.currentUser.email, // Save the user's email
-        createdAt: serverTimestamp() // Add a timestamp
+        authorId: auth.currentUser.uid, // <-- CHANGED THIS LINE
+        authorEmail: auth.currentUser.email,
+        createdAt: serverTimestamp()
       });
-      setPostText(''); // Clear the input box after posting
+      setPostText('');
       alert("Post created successfully!");
     } catch (error) {
       console.error("Error adding document: ", error);
